@@ -1,8 +1,9 @@
 GpsMsg::Application.routes.draw do
-  resources :users
+  resources :users, except: [ :destroy ]
   resources :topics
   resources :tags
-  resources :subscriptions, except: [ :show, :edit, :update ]
+  resources :subscriptions, only: [ :create, :destroy ]
+  resources :sessions, only: [ :new, :create, :destroy ]
 
   root :to => 'sessions#new'
   match '/signin', to: 'sessions#new'
