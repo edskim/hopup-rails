@@ -5,9 +5,10 @@
 <br/>
 <h2 class='pull-left'>My Topics:</h2>
 <br/>
-  <ul>
-    <% @user.created_topics.each do |topic| %>
-      <li><%= link_to topic.name, topic %></li>
-    <% end %>
-  </ul>
+<% @user.created_topics.each do |topic| %>
+  <tr>
+    <td><%= link_to topic.name, topic %></td>
+    <td><%= link_to 'Delete', topic_path(topic.id), method: :delete %></td>
+  </tr>
+<% end %>
 </table>

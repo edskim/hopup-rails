@@ -38,6 +38,10 @@ class TopicsController < ApplicationController
   end
 
   def destroy
+    @topic = Topic.find(params[:id])
+    @topic.destroy
+    flash[:success] = 'Topic deleted.'
+    redirect_to @topic.creator
   end
   
 end

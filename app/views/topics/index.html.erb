@@ -2,12 +2,16 @@
 
 <table>
   <tr>Topics:</tr>
-  <br/>
   <% @topics.each do |topic| %>
     <tr>
       <td><%= link_to topic.name, topic_path(topic.id) %></td>
-      <td><%= link_to 'Subscribe', subscriptions_path(
-        subscription: { user_id: current_user.id, topic_id: topic.id }), method: :post %></td>
+      <td>
+        <% if current_user.subscribed_topics.include?(topic) %>
+          <%= link_to 'Unsubscribe',subscription_path(current_user.subscriptions.find_by_topic_id(topic.id).id),method: :delete %>
+        <% else %>
+          <%= link_to 'Subscribe', subscriptions_path(
+            subscription: { user_id: current_user.id, topic_id: topic.id }), method: :post %></td>
+        <% end %>
     </tr>
     <br/>
   <% end %>
