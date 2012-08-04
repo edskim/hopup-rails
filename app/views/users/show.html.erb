@@ -6,7 +6,7 @@
 <h2 class='pull-left'>My Topics:</h2>
 <br/>
   <ul>
-    <% @user.topics.each do |topic| %>
+    <% @user.created_topics.each do |topic| %>
       <li><%= link_to topic.name, topic %></li>
     <% end %>
   </ul>

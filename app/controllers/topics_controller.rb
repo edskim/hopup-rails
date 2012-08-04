@@ -16,7 +16,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new(params[:topic])
     if @topic.save
       flash[:success] = 'Topic created'
-      redirect_to @topic.user
+      redirect_to @topic.creator
     else
       render 'new'
     end

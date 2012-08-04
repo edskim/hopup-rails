@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
-  has_many :topics, dependent: :destroy
+  has_many :created_topics, class_name: 'Topic', foreign_key: 'creator_id', dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :subscribed_topics, through: :subscriptions, source: :topic
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -13,12 +14,6 @@ class User < ActiveRecord::Base
             uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
-
-  def subscribed_topics
-    self.subscriptions.map do |subscription|
-      subscription.topic
-    end
-  end
 
   private
 
