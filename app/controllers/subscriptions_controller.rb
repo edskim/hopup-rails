@@ -1,7 +1,6 @@
 class SubscriptionsController < ApplicationController
 
   def index
-    @user = User.find(params[:user_id])
   end
 
   def create
@@ -16,6 +15,10 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
+    @subscription = Subscription.find(params[:id])
+    @subscription.destroy
+    flash[:success] = 'Unsubscribed from topic'
+    redirect_to subscriptions_path(user_id: @subscription.user_id)
   end
   
 end
