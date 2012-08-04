@@ -1,0 +1,9 @@
+<h1>Your Subscriptions</h1>
+<table>
+  <tr>Topics:</tr>
+  <br/>
+  <% @user.subscribed_topics.each do |topic| %>
+    <tr><%= link_to topic.name, topic_path(topic.id) %></tr>
+    <br/>
+  <% end %>
+</table>

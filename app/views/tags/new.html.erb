@@ -1,0 +1,18 @@
+<h1>Create new tag</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@tag) do |f| %>
+    <%= render 'shared/error_messages' %>
+
+      <%= f.label :text %>
+      <%= f.text_field :text %>
+      <%= f.label :lat %>
+      <%= f.text_field :lat %>
+      <%= f.label :lng %>
+      <%= f.text_field :lng %>
+      
+      <%= f.submit "Create tag", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

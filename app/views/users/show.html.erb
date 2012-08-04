@@ -1,0 +1,13 @@
+<h1><%= @user.name %></h1>
+
+<table>
+<tr><%= link_to @user.email, "mailto:#{@user.email}" %></tr>
+<br/>
+<h2 class='pull-left'>My Topics:</h2>
+<br/>
+  <ul>
+    <% @user.topics.each do |topic| %>
+      <li><%= link_to topic.name, topic %></li>
+    <% end %>
+  </ul>
+</table>

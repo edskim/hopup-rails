@@ -1,0 +1,10 @@
+<h1><%= @topic.name %></h1>
+<%= link_to 'Edit topic name', edit_topic_path(@topic.id) %>
+<br/>
+<h2>Tags:</h2>
+<br/>
+<ul>
+  <% @topic.tags.each do |tag| %>
+    <li><%= link_to tag.text, tag %></li>
+  <% end %>
+</ul>

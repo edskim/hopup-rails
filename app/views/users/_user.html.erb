@@ -1,0 +1,9 @@
+
+<tr>
+  <td>
+    <%= link_to user.name, user_path(user.id) %>
+  </td>
+  <td>
+    <%= link_to user.email, "mailto:#{user.email}" %>
+  </td>
+</tr>

@@ -1,0 +1,10 @@
+<h1>List of tags</h1>
+
+<table>
+  <tr>Tags:</tr>
+  <br/>
+  <% @tags.each do |tag| %>
+    <tr><%= link_to tag.text, tag_path(tag.id) %></tr>
+    <br/>
+  <% end %>
+</table>

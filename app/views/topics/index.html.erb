@@ -1,0 +1,14 @@
+<h1>List of Topics</h1>
+
+<table>
+  <tr>Topics:</tr>
+  <br/>
+  <% @topics.each do |topic| %>
+    <tr>
+      <td><%= link_to topic.name, topic_path(topic.id) %></td>
+      <td><%= link_to 'Subscribe', subscriptions_path(
+        subscription: { user_id: current_user.id, topic_id: topic.id }), method: :post %></td>
+    </tr>
+    <br/>
+  <% end %>
+</table>
