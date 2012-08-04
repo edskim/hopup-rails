@@ -7,11 +7,9 @@
 
       <%= f.label :text %>
       <%= f.text_field :text %>
-      <%= f.label :lat %>
-      <%= f.text_field :lat %>
-      <%= f.label :lng %>
-      <%= f.text_field :lng %>
-      
+      <%= f.label :location %>
+      <%= f.text_field :location %>
+      <%= f.hidden_field :topic_id, :value => @topic_id %>
       <%= f.submit "Create tag", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
