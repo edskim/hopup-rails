@@ -1,9 +1,13 @@
 <h1>Your Subscriptions</h1>
+<% @subscribed_tags = [] %>
 <table>
-  <tr>Topics:</tr>
+  <th>Creator</th>
+  <th>Topics</th>
   <br/>
   <% current_user.subscribed_topics.each do |topic| %>
     <tr>
+      <% @subscribed_tags += topic.tags %>
+      <td><%= link_to topic.creator.name, topic.creator %>
       <td><%= link_to topic.name, topic %></td>
       <td><%= link_to 'Unsubscribe', 
               subscription_path(current_user.subscriptions.find_by_topic_id(topic.id)),
@@ -13,3 +17,13 @@
     <br/>
   <% end %>
 </table>
+
+<div class="row">
+   <% @markers = [] %>
+   <% @subscribed_tags.each do |tag| %>
+     <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
+   <% end %>
+  <div class="span6 offset3">
+    <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?size=500x500&sensor=false&#{@markers.join('&')}" %>
+  </div>
+</div>

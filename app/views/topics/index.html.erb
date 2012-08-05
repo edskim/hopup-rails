@@ -1,9 +1,11 @@
 <h1>List of Topics</h1>
 
 <table>
-  <tr>Topics:</tr>
+  <th>Creator</th>
+  <th>Topics</th>
   <% @topics.each do |topic| %>
     <tr>
+      <td><%= link_to topic.creator.name, topic.creator %></td>
       <td><%= link_to topic.name, topic_path(topic.id) %></td>
       <td>
         <% if current_user.subscribed_topics.include?(topic) %>

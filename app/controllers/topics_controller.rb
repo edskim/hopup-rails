@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   before_filter :check_if_current_user, only: [ :create, :edit, :update, :destroy ]
 
   def index
-    @topics = current_user.created_topics
+    @topics = Topic.all
   end
 
   def show
