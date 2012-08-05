@@ -4,10 +4,12 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    respond_with(@users)
   end
 
   def show
     @user = User.find(params[:id])
+    respond_with(@user)
   end
 
   def new
@@ -19,10 +21,8 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = 'Account created.'
-      redirect_to @user
-    else
-      render 'new'
     end
+    respond_with(@user)
   end
 
   def edit
@@ -32,20 +32,21 @@ class UsersController < ApplicationController
     if @user && @user.update_attributes(params[:user])
       sign_in @user
       flash[:success] = 'Changes saved successfully'
-      redirect_to @user
-    else
-      flash[:error] = 'Invalid changes'
-      render 'edit'
     end
+    respond_with(@user)
   end
 
   private
 
     def correct_user
       @user = User.find(params[:id])
-      unless current_user?(@user)
-        flash[:error] = 'You do not have permission to edit that information.'
-        redirect_to current_user
+
+      respond_to do |format|
+        unless current_user?(@user)
+          flash[:error] = 'You do not have permission to edit that information.'
+          format.html { redirect_to current_user }
+          format.json { render :json => "You do not have the correct permission", status: :unprocessable_entity }
+        end
       end
     end
 end

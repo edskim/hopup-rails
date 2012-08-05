@@ -3,22 +3,28 @@ class SubscriptionsController < ApplicationController
   before_filter :check_current_user, only: [ :create, :destroy ]
 
   def index
+    @subscriptions = current_user.subscriptions
+    respond_with(@subscriptions)
   end
 
   def create
-    if @subscription.save
-      flash[:success] = 'Topic subscribed'
-      redirect_to topics_path
-    else
-      flash[:error] = 'Topic not subscribed'
-      redirect_to topics_path
+    respond_to do |format|
+      if @subscription.save 
+        flash[:success] = 'Topic subscribed' 
+        format.html { redirect_to topics_path }
+        format.json { render json: @subscription, status: :created, location: @subscription }
+      else
+        flash[:error] = 'Topic not subscribed'
+        format.html { redirect_to topics_path }
+        format.json { render json: "Subscription not created.", status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @subscription.destroy
     flash[:success] = 'Unsubscribed from topic'
-    redirect_to subscriptions_path(user_id: @subscription.user_id)
+    respond_with(@subscription)
   end
 
   private

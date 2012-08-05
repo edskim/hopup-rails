@@ -4,10 +4,12 @@ class TopicsController < ApplicationController
 
   def index
     @topics = Topic.all
+    respond_with(@topics)
   end
 
   def show
     @topic = Topic.find(params[:id])
+    respond_with(@topic)
   end
 
   def new
@@ -17,10 +19,8 @@ class TopicsController < ApplicationController
   def create
     if @topic.save
       flash[:success] = 'Topic created'
-      redirect_to @topic.creator
-    else
-      render 'new'
     end
+    respond_with(@topic)
   end
 
   def edit
@@ -29,17 +29,14 @@ class TopicsController < ApplicationController
   def update
     if @topic && @topic.update_attributes(params[:topic])
       flash[:success] = 'Topic updated'
-      redirect_to @topic
-    else
-      flash[:error] = 'Invalid changes'
-      render 'edit'
     end
+    respond_with(@topic)
   end
 
   def destroy
     @topic.destroy
     flash[:success] = 'Topic deleted.'
-    redirect_to @topic.creator
+    respond_with(@topic)
   end
   
   private

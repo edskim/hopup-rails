@@ -1,14 +1,17 @@
 class TagsController < ApplicationController
   include TagsHelper
+
   before_filter :signed_in_user
   before_filter :check_if_current_user, only: [ :new, :create, :edit, :update, :destroy ]
 
   def index
     @tags = current_user.created_topics.inject([]) { |all_tags, topic| all_tags + topic.tags }
+    respond_with(@tags)
   end
 
   def show
     @tag = Tag.find(params[:id])
+    respond_with(@tag)
   end
 
   def new
@@ -19,10 +22,8 @@ class TagsController < ApplicationController
     @tag.location, @tag.lat, @tag.lng = request_coordinates(@tag.location)
     if @tag.save
       flash[:success] = 'Tag created'
-      redirect_to @tag.topic
-    else
-      render 'new'
     end
+    respond_with(@tag)
   end
 
   def edit
@@ -35,16 +36,14 @@ class TagsController < ApplicationController
     end
     if @tag && @tag.update_attributes(params[:tag])
       flash[:success] = 'Tag successfully updated'
-      redirect_to @tag
-    else
-      render 'edit'
     end
+    respond_with(@tag)
   end
 
   def destroy
     @tag.destroy
     flash[:success] = 'Tag is deleted.'
-    redirect_to Topic.find(@tag.topic_id)
+    respond_with(@tag)
   end
   
   private
