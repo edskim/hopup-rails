@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :signed_in_user, only: [ :index, :edit, :update, :destroy]
+  before_filter :correct_user, only: [ :edit, :update, :destroy ]
 
   def index
     @users = User.all
@@ -24,11 +26,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user && @user.update_attributes(params[:user])
       sign_in @user
       flash[:success] = 'Changes saved successfully'
@@ -39,4 +39,13 @@ class UsersController < ApplicationController
     end
   end
 
+  private
+
+    def correct_user
+      @user = User.find(params[:id])
+      unless current_user?(@user)
+        flash[:error] = 'You do not have permission to edit that information.'
+        redirect_to current_user
+      end
+    end
 end

@@ -10,8 +10,14 @@
           <%= link_to 'Unsubscribe',subscription_path(current_user.subscriptions.find_by_topic_id(topic.id).id),method: :delete %>
         <% else %>
           <%= link_to 'Subscribe', subscriptions_path(
-            subscription: { user_id: current_user.id, topic_id: topic.id }), method: :post %></td>
+            subscription: { user_id: current_user.id, topic_id: topic.id }), method: :post %>
         <% end %>
+      </td>
+      <% if current_user?(topic.creator) %>
+        <td>
+          <%= link_to 'Delete', topic_path(topic.id), method: :delete %>
+        </td>
+      <% end %>
     </tr>
     <br/>
   <% end %>

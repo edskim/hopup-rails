@@ -2,11 +2,11 @@
 <table>
   <tr>Topics:</tr>
   <br/>
-  <% current_user.subscriptions.each do |subscription| %>
+  <% current_user.subscribed_topics.each do |topic| %>
     <tr>
-      <td><%= link_to subscription.topic.name, topic_path(subscription.topic.id) %></td>
+      <td><%= link_to topic.name, topic %></td>
       <td><%= link_to 'Unsubscribe', 
-              subscription_path(subscription.id),
+              subscription_path(current_user.subscriptions.find_by_topic_id(topic.id)),
               method: :delete %>
       </td>
     </tr>
