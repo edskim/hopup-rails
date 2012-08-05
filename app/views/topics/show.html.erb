@@ -1,20 +1,28 @@
 <h1><%= @topic.name %></h1>
-<%= link_to 'Edit topic name', edit_topic_path(@topic.id) if current_user?(@topic.creator) %>
-<% @markers = [] %>
-<br/>
-<h2>Tags:    <%= link_to 'Create new tag', new_tag_path(topic_id: @topic.id) if current_user?(@topic.creator) %></h2>
-<br/>
 <div class="row">
-  <table>
-   <% @topic.tags.each do |tag| %>
-     <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
-     <tr>
-       <td><li><%= link_to tag.text, tag %></li></td>
-       <td><%= link_to '(Delete)', tag_path(tag.id), method: :delete if current_user?(@topic.creator) %></td>
-     </tr>
-   <% end %>
-  </table> 
-  <div class="span6 offset3">
+  <div class="span2 offset5"
+    <h4><%= link_to 'Edit topic name', edit_topic_path(@topic.id) if current_user?(@topic.creator) %></h4>
+  </div>
+</div>
+<% @markers = [] %>
+
+<div class="row">
+  <div class="span6">
+    <h3>Tags: <%= link_to 'Create new tag', new_tag_path(topic_id: @topic.id) if current_user?(@topic.creator) %></h3>
+  </div>
+</div>
+
+ <div class="row">
+  <div class="span6">
+    <% @topic.tags.each do |tag| %>
+      <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
+      <div class="row">
+         <div class="span5"><%= link_to tag.text, tag %></div>
+         <div class="span1"><%= link_to '(Delete)', tag_path(tag.id), method: :delete if current_user?(@topic.creator) %></div>
+      </div>
+     <% end %>
+  </div>
+  <div class="span6">
     <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?size=500x500&sensor=false&#{@markers.join('&')}" %>
   </div>
 </div>
