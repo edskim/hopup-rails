@@ -41,12 +41,6 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
 
-      respond_to do |format|
-        unless current_user?(@user)
-          flash[:error] = 'You do not have permission to edit that information.'
-          format.html { redirect_to current_user }
-          format.json { render :json => "You do not have the correct permission", status: :unprocessable_entity }
-        end
-      end
+      redirect_if_not_current_user(@user.id)
     end
 end
