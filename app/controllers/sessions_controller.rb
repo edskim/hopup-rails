@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       if user && user.authenticate(params[:session][:password])
         sign_in user
         format.html { redirect_to user }
-        format.json { render json: user, status: :signed_in, location: user }
+        format.json { render json: user, status: :created, location: user }
       else
         flash.now[:error] = 'Invalid email or password.'
         format.html { render 'new' }
@@ -21,7 +21,10 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to root_url
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.json { render json: { status: :logged_out }}
+    end
   end
   
 end

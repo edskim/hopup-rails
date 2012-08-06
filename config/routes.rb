@@ -4,6 +4,7 @@ GpsMsg::Application.routes.draw do
   resources :tags
   resources :subscriptions, only: [ :index, :create, :destroy ]
   resources :sessions, only: [ :new, :create, :destroy ]
+  resources :hits, only: [ :new, :create, :destroy ]
 
   root :to => 'sessions#new'
   match '/signin', to: 'sessions#new'

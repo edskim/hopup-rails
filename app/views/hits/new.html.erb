@@ -1,0 +1,20 @@
+<% @tags = [] %>
+<% @hits.each do |hit| %>
+  <div class='row'>
+    <div class='span6'>
+      <%= link_to hit.tag.text, hit.tag %>
+      <% @tags << hit.tag %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="span6">
+    <% @markers = [] %>
+    <% @markers << "markers=color:red%7Clabel:M%7C#{@lat},#{@lng}" %>
+    <% @tags.each do |tag| %>
+      <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
+    <% end %>
+    <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@lat},#{@lng}&size=500x500&sensor=false&#{@markers.join('&')}" %>
+  </div>
+</div>

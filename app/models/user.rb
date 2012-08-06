@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :created_topics, class_name: 'Topic', foreign_key: 'creator_id', dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :subscribed_topics, through: :subscriptions, source: :topic
+  has_many :hits, class_name: 'Hit', foreign_key: 'requester_id', dependent: :destroy
+  has_many :tags_hit, through: :hits, source: :tag
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token

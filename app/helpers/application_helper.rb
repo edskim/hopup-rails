@@ -4,7 +4,7 @@ module ApplicationHelper
         respond_to do |format|
           store_location
           format.html { redirect_to signin_path, notice: "Please sign in." }
-          format.json { render json: "You must be signed in to do that", status: :unprocessable_entity }
+          format.json { render json: { error: "You must be signed in to do that"}, status: :unprocessable_entity }
         end
       end
     end

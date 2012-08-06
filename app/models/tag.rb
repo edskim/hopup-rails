@@ -1,6 +1,7 @@
 class Tag < ActiveRecord::Base
   attr_accessible :location, :lat, :lng, :text, :topic_id
   belongs_to :topic
+  has_many :hits, dependent: :destroy
 
   validates :lat, presence: true
   validates :lng, presence: true
