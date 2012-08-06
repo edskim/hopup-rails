@@ -14,18 +14,19 @@
 </h3>
 <div class="row">
   <div class="span6">
-    <% @tags = [] %>
+    <% @markers = [] %>
     <% @user.created_topics.each do |topic| %>
-      <% @tags += topic.tags %>
-        <div class="span4"><%= link_to topic.name, topic %></div>
+      <% hit_num = 0 %>
+        <% topic.tags.each do |tag| %>
+          <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
+          <% hit_num += tag.hits.length%>
+        <% end %>
+        <div class="span4"><%= link_to "#{topic.name}(#{hit_num} hits)", topic %></div>
         <div class="span1"><%= link_to 'Delete', topic_path(topic.id), method: :delete if current_user?(@user) %></div>
     <% end %>
   </div>
   <div class="span6">
-    <% @markers = [] %>
-    <% @tags.each do |tag| %>
-      <% @markers << "markers=color:blue%7Clabel:S%7C#{tag.lat},#{tag.lng}" %>
-    <% end %>
+    
     <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?size=500x500&sensor=false&#{@markers.join('&')}" %>
   </div>
 </div>

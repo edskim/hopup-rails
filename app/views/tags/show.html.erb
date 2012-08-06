@@ -1,16 +1,22 @@
 <h1><%= @tag.text %></h1>
 <h2><%= @tag.location %></h2>
 <h2><%= "Latitude: #{@tag.lat}  Longitude: #{@tag.lng}" %></h2>
-<%= link_to 'Edit tag', edit_tag_path(@tag.id) if current_user?(@tag.topic.creator) %>
-<br/>
-<table>
-  <h3>
-  <tr>
-    <td>Found in topic: </td>
-    <td><%= link_to @tag.topic.name, @tag.topic %></td>
-  </tr>
-</h3>
-</table>
+
+<div class="row">
+  <div class="span12">
+    <div class="span3">
+      <%= link_to 'Edit tag', edit_tag_path(@tag.id) if current_user?(@tag.topic.creator) %>
+    </div>
+    <div class="span3">
+      <%= "#{@tag.hits.length} hits" if current_user?(@tag.topic.creator) %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <h3>Found in topic: <%= link_to @tag.topic.name, @tag.topic %></h3>
+  </div>
+</div>
 
 <div class="row">
   <div class="span6 offset3">

@@ -29,6 +29,10 @@
       <div class="span1">
         <%= link_to 'Delete', topic_path(topic.id), method: :delete %>
       </div>
+      <% hits = topic.tags.inject(0) { |sum, tag| sum+=tag.hits.length  }%>
+      <div class="span1">
+        <%= "#{hits} hits" %>
+      </div>
     <% end %>
   </div>
 <% end %>
