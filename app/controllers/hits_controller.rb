@@ -22,7 +22,7 @@ class HitsController < ApplicationController
     @lng = params[:lng]
     current_user.subscribed_topics.each do |topic|
       topic.tags.each do |tag|
-        if GeoDistance::Haversine.geo_distance( @lat.to_f, @lng.to_f, tag.lat, tag.lng ).to_meters < 30
+        if GeoDistance::Haversine.geo_distance( @lat.to_f, @lng.to_f, tag.lat, tag.lng ).to_meters < 300
           hit = Hit.new( requester_id: current_user.id, lat: @lat, lng: @lng, tag_id: tag.id )
           hit.save
           @hits << hit
