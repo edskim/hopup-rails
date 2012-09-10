@@ -5,7 +5,11 @@ class TagsController < ApplicationController
   before_filter :check_if_current_user, only: [ :new, :create, :edit, :update, :destroy ]
 
   def index
-    @tags = current_user.created_topics.inject([]) { |all_tags, topic| all_tags + topic.tags }
+    if params[:topic_id]
+      @tags = Topic.find(params[:topic_id]).tags
+    else
+      @tags = current_user.created_topics.inject([]) { |all_tags, topic| all_tags + topic.tags }
+    end
     respond_with(@tags)
   end
 
