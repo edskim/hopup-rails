@@ -9,7 +9,7 @@ class HopupClient
   DEMO_FILE_LOC = 'demo.html'
 
   def initialize
-    @server = "http://localhost:3000"
+    @server = "http://ancient-plains-4741.herokuapp.com"
   end
 
   def parse_response(resp)
@@ -26,6 +26,7 @@ class HopupClient
                               session: { email: @email, password: @pw })
     @client = parse_response(resp)
     @cookies = resp.cookies
+    printf "Cookie: #{@cookies}"
   end
 
   def get_nearby_tags(lat, lng)
