@@ -16,3 +16,4 @@
 
 # Ignore demo html
 /client/*.html
+*.swp
